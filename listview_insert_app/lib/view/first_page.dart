@@ -18,19 +18,31 @@ class _FirstPageState extends State<FirstPage> {
         child: ListView.builder(
           itemCount: widget.list.length,
           itemBuilder: (contex, index){
-            return GestureDetector(
-              onTap: () => _showDialog(index),
-              child: Card(
-                child: Row(
-                  children: [
-                    Image.asset(
-                      widget.list[index].imagePath,
-                      width: 100,
-                    ),
-                    Text(
-                      "   ${widget.list[index].animalName}"
-                    ),
-                  ],
+            return Dismissible(
+              direction: DismissDirection.endToStart,
+              key: ValueKey(widget.list),
+              background: Container(
+                color: Colors.red,
+                alignment: Alignment.centerRight,
+                child: const Icon(
+                  Icons.delete_forever,
+                  size: 50,
+                ),
+              ),
+              child: GestureDetector(
+                onTap: () => _showDialog(index),
+                child: Card(
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        widget.list[index].imagePath,
+                        width: 100,
+                      ),
+                      Text(
+                        "   ${widget.list[index].animalName}"
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

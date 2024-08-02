@@ -47,29 +47,46 @@ class _TableListState extends State<TableList> {
         child: ListView.builder(
             itemCount: todoList.length,
             itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {
-                  Message.imagePath = todoList[index].imagePath;
-                  Message.workList = todoList[index].workList;
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DetailList(),
-                    ),
-                  );
+              return Dismissible(
+                direction: DismissDirection.endToStart,
+                key: ValueKey(todoList[index]),
+                onDismissed: (direction) {
+                  todoList.remove(todoList[index]);
+                  setState(() {});
                 },
-                child: Card(
-                  color: index % 2 == 0 ? Colors.green : Colors.yellow,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.asset(todoList[index].imagePath),
+                background: Container(
+                  color: Colors.red,
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: const Icon(
+                    Icons.delete_forever,
+                    size: 50,
+                  ),
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    Message.imagePath = todoList[index].imagePath;
+                    Message.workList = todoList[index].workList;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DetailList(),
                       ),
-                      Text(
-                        "   ${todoList[index].workList}",
-                      ),
-                    ],
+                    );
+                  },
+                  child: Card(
+                    color: index % 2 == 0 ? Colors.green : Colors.yellow,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset(todoList[index].imagePath),
+                        ),
+                        Text(
+                          "   ${todoList[index].workList}",
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );

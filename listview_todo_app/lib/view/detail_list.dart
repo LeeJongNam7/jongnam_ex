@@ -22,6 +22,7 @@ class _DetailListState extends State<DetailList> {
             Image.asset(
               Message.imagePath,
               width: 100,
+              // fit: BoxFit.fill,
             ),
             Text(
               Message.workList,
